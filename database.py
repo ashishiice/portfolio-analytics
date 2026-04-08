@@ -127,6 +127,8 @@ class PortfolioDatabase:
                     folio TEXT,
                     amc TEXT,
                     current_nav REAL,
+                    current_value REAL,
+                    xirr REAL,
                     last_updated TEXT,
                     created_at TEXT DEFAULT CURRENT_TIMESTAMP,
                     updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
@@ -182,6 +184,26 @@ class PortfolioDatabase:
                 )
             """)
             
+            # Manual Assets table - FD, PPF, NPS, Cash
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS manual_assets (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    asset_type TEXT NOT NULL,
+                    institution TEXT,
+                    account_number TEXT,
+                    principal REAL,
+                    interest_rate REAL,
+                    start_date TEXT,
+                    maturity_date TEXT,
+                    interest_type TEXT,
+                    compounding_frequency TEXT,
+                    current_value REAL,
+                    notes TEXT,
+                    last_updated TEXT,
+                    created_at TEXT DEFAULT CURRENT_TIMESTAMP
+                )
+            """)
+            
             # Index for faster queries
             cursor.execute("""
                 CREATE INDEX IF NOT EXISTS idx_holdings_isin ON holdings(isin)
@@ -194,6 +216,9 @@ class PortfolioDatabase:
             """)
             cursor.execute("""
                 CREATE INDEX IF NOT EXISTS idx_nav_history_isin ON nav_history(isin)
+            """)
+            cursor.execute("""
+                CREATE INDEX IF NOT EXISTS idx_manual_assets_type ON manual_assets(asset_type)
             """)
             cursor.execute("""
                 CREATE INDEX IF NOT EXISTS idx_nav_history_date ON nav_history(date)
