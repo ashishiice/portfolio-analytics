@@ -111,8 +111,9 @@ def render_sidebar():
     )
     
     if uploaded_file is not None:
-        # Save uploaded file temporarily
-        temp_path = parent_dir / 'temp_uploaded_file'
+        # Save uploaded file temporarily with correct extension
+        file_ext = Path(uploaded_file.name).suffix
+        temp_path = parent_dir / f'temp_uploaded_file{file_ext}'
         temp_path.write_bytes(uploaded_file.getvalue())
         
         if st.sidebar.button("Parse CAS", type="primary"):
