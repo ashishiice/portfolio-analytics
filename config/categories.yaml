@@ -1,0 +1,217 @@
+# Mutual Fund Scheme Classification Rules
+# Maps scheme name patterns to asset categories
+
+categories:
+  # ELSS/Tax Saver Funds
+  elss:
+    patterns:
+      - "tax saver"
+      - "taxs?aver"
+      - "elss"
+      - "long term equity"
+      - "lt equity"
+      - "tax relief"
+      - "sec 80c"
+      - "equity linked"
+    category: "ELSS"
+    asset_type: "Equity"
+
+  # Large Cap Funds
+  large_cap:
+    patterns:
+      - "large cap"
+      - "bluechip"
+      - "blue chip"
+      - "top 100"
+      - "top 200"
+      - "largecap"
+    category: "Equity Large Cap"
+    asset_type: "Equity"
+
+  # Mid Cap Funds
+  mid_cap:
+    patterns:
+      - "mid cap"
+      - "midcap"
+      - "midcap fund"
+      - "emerging businesses"
+    category: "Equity Mid Cap"
+    asset_type: "Equity"
+
+  # Small Cap Funds
+  small_cap:
+    patterns:
+      - "small cap"
+      - "smallcap"
+    category: "Equity Small Cap"
+    asset_type: "Equity"
+
+  # Multi Cap/Flexi Cap Funds
+  flexi_cap:
+    patterns:
+      - "flexi cap"
+      - "flexicap"
+      - "multi cap"
+      - "multicap"
+      - "diversified"
+      - "equity opportunities"
+      - "equity fund"
+      - "growth fund"
+    category: "Equity Flexi Cap"
+    asset_type: "Equity"
+
+  # Index Funds
+  index:
+    patterns:
+      - "index fund"
+      - "nifty 50"
+      - "sensex"
+      - "benchmark"
+      - "etf"
+      - "exchange traded"
+    category: "Equity Index"
+    asset_type: "Equity"
+
+  # Liquid Funds
+  liquid:
+    patterns:
+      - "liquid"
+      - "liquidity"
+      - "cash"
+      - "insta cash"
+      - "super savings"
+      - "treasury advantage"
+      - "ultra short"
+      - "overnight"
+    category: "Liquid"
+    asset_type: "Debt"
+
+  # Short Term Debt
+  short_term:
+    patterns:
+      - "short term"
+      - "shortterm"
+      - "low duration"
+      - "money market"
+      - "floater"
+      - "corporate bond"
+      - "banking & psu"
+      - "banking and psu"
+    category: "Debt Short Term"
+    asset_type: "Debt"
+
+  # Medium/Long Term Debt
+  medium_long_term:
+    patterns:
+      - "medium term"
+      - "dynamic bond"
+      - "strategic bond"
+      - "income"
+      - "gilt"
+      - "govt securities"
+      - "long duration"
+    category: "Debt Medium/Long Term"
+    asset_type: "Debt"
+
+  # Credit Risk/High Yield
+  credit_risk:
+    patterns:
+      - "credit risk"
+      - "high yield"
+    category: "Debt Credit Risk"
+    asset_type: "Debt"
+
+  # Balanced Advantage/Dynamic Asset Allocation
+  balanced_advantage:
+    patterns:
+      - "balanced advantage"
+      - "dynamic asset"
+      - "asset allocator"
+      - "equity savings"
+    category: "Hybrid Balanced Advantage"
+    asset_type: "Hybrid"
+
+  # Aggressive Hybrid
+  aggressive_hybrid:
+    patterns:
+      - "aggressive hybrid"
+      - "balanced growth"
+      - "equity hybrid"
+    category: "Hybrid Aggressive"
+    asset_type: "Hybrid"
+
+  # Conservative Hybrid
+  conservative_hybrid:
+    patterns:
+      - "conservative hybrid"
+      - "monthly income"
+      - "mip"
+      - "regular savings"
+    category: "Hybrid Conservative"
+    asset_type: "Hybrid"
+
+  # International/Overseas Equity
+  international:
+    patterns:
+      - "global"
+      - "international"
+      - "us equity"
+      - "nasdaq"
+      - "sp 500"
+      - "s&p 500"
+      - "world"
+      - "overseas"
+    category: "Equity International"
+    asset_type: "Equity"
+
+  # Gold Funds
+  gold:
+    patterns:
+      - "gold"
+      - "precious metal"
+    category: "Gold"
+    asset_type: "Commodity"
+
+  # Fund of Funds
+  fof:
+    patterns:
+      - "fund of fund"
+      - "fof"
+    category: "Fund of Funds"
+    asset_type: "Other"
+
+default_category: "Equity Flexi Cap"
+
+# AMC Mapping for known fund houses
+amc_mapping:
+  "SBI": "SBI Mutual Fund"
+  "HDFC": "HDFC Mutual Fund"
+  "ICICI": "ICICI Prudential Mutual Fund"
+  "ICICI PRU": "ICICI Prudential Mutual Fund"
+  "NIPPON": "Nippon India Mutual Fund"
+  "RELIANCE": "Nippon India Mutual Fund"
+  "AXIS": "Axis Mutual Fund"
+  "KOTAK": "Kotak Mahindra Mutual Fund"
+  "UTI": "UTI Mutual Fund"
+  "DSP": "DSP Mutual Fund"
+  "ADITYA BIRLA": "Aditya Birla Sun Life Mutual Fund"
+  "ABSL": "Aditya Birla Sun Life Mutual Fund"
+  "FRANKLIN": "Franklin Templeton Mutual Fund"
+  "FT": "Franklin Templeton Mutual Fund"
+  "TATA": "Tata Mutual Fund"
+  "IDFC": "IDFC Mutual Fund"
+  "CANARA ROBECO": "Canara Robeco Mutual Fund"
+  "MIRAE": "Mirae Asset Mutual Fund"
+  "MOTILAL OSWAL": "Motilal Oswal Mutual Fund"
+  "L&T": "L&T Mutual Fund"
+  "INVESCO": "Invesco Mutual Fund"
+  "PPFAS": "PPFAS Mutual Fund"
+  "PARAG PARIKH": "PPFAS Mutual Fund"
+  "EDELWEISS": "Edelweiss Mutual Fund"
+  "HSBC": "HSBC Mutual Fund"
+  "QUANT": "Quant Mutual Fund"
+  "PGIM": "PGIM India Mutual Fund"
+  "UNION": "Union Mutual Fund"
+  "SUNDARAM": "Sundaram Mutual Fund"
+  "BARODA BNP PARIBAS": "Baroda BNP Paribas Mutual Fund"
+  "BNP PARIBAS": "Baroda BNP Paribas Mutual Fund"

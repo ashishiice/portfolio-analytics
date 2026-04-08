@@ -1,0 +1,39 @@
+# Portfolio Analytics Threshold Configuration
+# Phase 2: Alert and limit configurations
+
+# Concentration Limits
+concentration_limit: 0.15        # Flag if any single holding > 15% of portfolio
+top3_limit: 0.50                 # Flag if top 3 holdings > 50% of portfolio
+equity_deviation: 0.05         # Allow 5% deviation from target equity allocation
+
+# Cash Management
+cash_limit: 0.10                 # Flag if cash > 10% of portfolio (cash drag)
+min_cash_buffer: 0.03            # Minimum 3% cash recommended for liquidity
+
+# ELSS Lock-in Tracking
+elss_warning_months: 3           # Warn 3 months before ELSS lock-in ends
+elss_unlock_window_months: 12    # Show ELSS unlocking in next 12 months
+
+# Liquidity Calendar
+fd_maturity_window_days: 90      # Show FD maturities in next 90 days
+ppf_withdrawal_years: 7          # PPF partial withdrawal eligible after 7 years
+ppf_extension_years: 15          # PPF matures after 15 years
+
+# NPS Tracking
+nps_equity_max: 0.75             # NPS Tier 1 max equity allocation (75%)
+nps_tier1_lockin_age: 60         # Tier 1 locked until age 60
+
+# Alert Severity Thresholds
+alert_severity:
+  critical:
+    concentration: 0.20          # Red alert if > 20% in single holding
+    cash_drag: 0.15              # Red alert if cash > 15%
+    top3_concentration: 0.60     # Red alert if top 3 > 60%
+  warning:
+    concentration: 0.15          # Yellow alert if > 15%
+    cash_drag: 0.10              # Yellow alert if cash > 10%
+    top3_concentration: 0.50     # Yellow alert if top 3 > 50%
+  
+# Rebalancing Thresholds
+rebalance_threshold_absolute: 50000   # INR 50,000 absolute difference triggers rebalance
+rebalance_threshold_pct: 0.05         # 5% deviation triggers rebalance

@@ -1,0 +1,114 @@
+# Glide Path Configuration
+# Age-based asset allocation targets for Indian investors
+# Formula: equity_base = max(100 - age, 30), debt = 100 - equity - gold - cash
+
+# User Profile: Ashish, 35 years old, moderate-aggressive investor
+# Treasury professional - expects precise calculations
+
+age_targets:
+  age_35:
+    equity: 60
+    debt: 35
+    gold: 3
+    cash: 2
+    aggressive_pct: 60  # Within equity, % in aggressive funds
+    moderate_pct: 40
+    description: "Growth phase - high equity allocation"
+    
+  age_40:
+    equity: 55
+    debt: 40
+    gold: 3
+    cash: 2
+    aggressive_pct: 50
+    moderate_pct: 50
+    description: "Early consolidation - reducing equity"
+    
+  age_45:
+    equity: 50
+    debt: 42
+    gold: 5
+    cash: 3
+    aggressive_pct: 40
+    moderate_pct: 60
+    description: "Mid-career balance - equal equity/debt"
+    
+  age_50:
+    equity: 45
+    debt: 47
+    gold: 5
+    cash: 3
+    aggressive_pct: 30
+    moderate_pct: 70
+    description: "Pre-retirement - capital preservation focus"
+    
+  age_55:
+    equity: 40
+    debt: 50
+    gold: 7
+    cash: 3
+    aggressive_pct: 20
+    moderate_pct: 80
+    description: "Near retirement - stability priority"
+    
+  age_60:
+    equity: 35
+    debt: 55
+    gold: 7
+    cash: 3
+    aggressive_pct: 10
+    moderate_pct: 90
+    description: "Retirement - income generation focus"
+
+# Dynamic calculation formula
+formula:
+  equity_base: "max(100 - age, 30)"
+  debt_calculation: "100 - equity - gold - cash"
+  minimum_equity: 30  # Floor at retirement
+  
+# Rebalancing thresholds
+rebalancing:
+  drift_tolerance: 0.05  # 5% deviation triggers rebalancing alert
+  max_drift_before_action: 0.10  # 10% deviation requires immediate action
+  tax_efficient_priority: true  # Prefer LTCG over STCG when rebalancing
+  
+# Asset class definitions for mapping
+asset_classes:
+  equity:
+    - "Equity"
+    - "ELSS"
+    - "Large Cap"
+    - "Mid Cap"
+    - "Small Cap"
+    - "Multi Cap"
+    - "Flexi Cap"
+    - "Index Fund"
+    - "ETF"
+  debt:
+    - "Debt"
+    - "Gilt"
+    - "Corporate Bond"
+    - "Banking & PSU"
+    - "Short Duration"
+    - "Medium Duration"
+    - "Long Duration"
+    - "Liquid"
+    - "Money Market"
+    - "Ultra Short Duration"
+  gold:
+    - "Gold"
+    - "Gold ETF"
+    - "Gold Fund"
+    - "Sovereign Gold Bond"
+  cash:
+    - "Cash"
+    - "Liquid Fund"
+    - "Sweep-in FD"
+    - "Savings Account"
+    - "Overnight Fund"
+
+# Risk parameters
+risk:
+  max_single_scheme_concentration: 0.15  # 15% max in single scheme
+  max_category_concentration: 0.40  # 40% max in single category
+  max_illiquid_allocation: 0.20  # 20% max in illiquid assets (ELSS, NPS Tier-2)

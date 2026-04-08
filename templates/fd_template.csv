@@ -1,0 +1,6 @@
+institution,account_number,principal,interest_rate,start_date,maturity_date,interest_type,compounding_frequency,current_value,notes
+"HDFC Bank","FD123456789",100000,7.5,2023-01-15,2026-01-15,compound,4,124500,"5-year tax saver FD"
+"SBI","SBIFD987654",50000,6.8,2024-03-10,2027-03-10,compound,4,54000,"Regular FD - quarterly compounding"
+"ICICI Bank","ICICIFD456789",200000,7.2,2023-06-20,2024-06-20,compound,4,215000,"Short term FD - maturing soon"
+"Axis Bank","AXISFD111222",150000,7.0,2022-12-01,2025-12-01,compound,4,185000,"Cumulative FD"
+"Kotak Mahindra","KOTAKFD333444",75000,6.5,2024-01-10,2025-01-10,simple,1,80000,"Simple interest FD"

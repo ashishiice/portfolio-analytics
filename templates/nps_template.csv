@@ -1,0 +1,10 @@
+pran,tier,allocation_type,allocation_percentage,current_value,contributions_ytd,returns_since_inception,notes
+"110012345678",1,equity,50,250000,50000,15.2,"Tier 1 - Equity (E) - Aggressive allocation"
+"110012345678",1,corporate_bond,20,100000,20000,8.5,"Tier 1 - Corporate Bonds (C)"
+"110012345678",1,govt_securities,30,150000,30000,7.8,"Tier 1 - Government Securities (G)"
+"110012345678",2,equity,40,80000,20000,12.5,"Tier 2 - Equity for additional returns"
+"110012345678",2,corporate_bond,30,60000,15000,7.2,"Tier 2 - Corporate Bonds"
+"110012345678",2,govt_securities,30,60000,15000,6.8,"Tier 2 - Government Securities"
+"110098765432",1,equity,75,500000,75000,18.3,"Tier 1 - Max equity allocation (< 50 years)"
+"110098765432",1,corporate_bond,10,66667,10000,6.5,"Tier 1 - Minimal corporate debt"
+"110098765432",1,govt_securities,15,100000,15000,7.0,"Tier 1 - Government debt"

@@ -1,0 +1,7 @@
+account_number,financial_year,deposit_date,amount,interest_rate,current_balance,maturity_date,lock_in_end,notes
+"PPF123456",2023,2023-04-05,150000,7.1,160650,2038-03-31,2030-04-05,"FY 2022-23 contribution - max limit"
+"PPF123456",2024,2024-04-10,150000,7.1,321300,2038-03-31,2031-04-10,"FY 2023-24 contribution"
+"PPF789012",2020,2020-05-15,100000,7.1,130000,2035-03-31,2027-05-15,"Older PPF account - partial withdrawal eligible"
+"PPF789012",2021,2021-04-20,50000,7.1,186500,2035-03-31,2028-04-20,"Partial contribution FY 2020-21"
+"PPF789012",2022,2022-04-08,150000,7.1,350000,2035-03-31,2029-04-08,"Full contribution FY 2021-22"
+"PPF789012",2023,2023-04-12,150000,7.1,525000,2035-03-31,2030-04-12,"Full contribution FY 2022-23"
