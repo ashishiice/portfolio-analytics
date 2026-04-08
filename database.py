@@ -30,6 +30,8 @@ class Holding:
     current_nav: Optional[float] = None
     last_updated: Optional[str] = None
     current_value: Optional[float] = None  # Computed field
+    asset_type: Optional[str] = "MF"  # Default to Mutual Fund
+    xirr: Optional[float] = None
 
 
 @dataclass
