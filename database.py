@@ -92,6 +92,12 @@ class PortfolioDatabase:
         if dir_path and not os.path.exists(dir_path):
             os.makedirs(dir_path)
     
+    def get_connection(self):
+        """Get a database connection. Caller must close it."""
+        conn = sqlite3.connect(self.db_path)
+        conn.row_factory = sqlite3.Row
+        return conn
+    
     @contextmanager
     def _get_connection(self):
         """Context manager for database connections."""
