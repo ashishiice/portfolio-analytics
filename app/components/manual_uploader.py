@@ -95,8 +95,8 @@ class ManualAssetUploader:
         
         # File uploader
         uploaded_file = st.file_uploader(
-            f"Upload {asset_code} CSV",
-            type=['csv'],
+            f"Upload {asset_code} CSV or Excel",
+            type=['csv', 'xls', 'xlsx'],
             key=f"upload_{asset_code}"
         )
         
@@ -107,8 +107,12 @@ class ManualAssetUploader:
         """Process uploaded file with validation and preview."""
         st.subheader("🔍 Validation & Preview")
         
-        # Save uploaded file temporarily
-        temp_path = f"/tmp/uploaded_{asset_code.lower()}.csv"
+        # Determine file extension from uploaded file name
+        file_name = uploaded_file.name
+        file_ext = file_name.split('.')[-1].lower() if '.' in file_name else 'csv'
+        
+        # Save uploaded file temporarily with correct extension
+        temp_path = f"/tmp/uploaded_{asset_code.lower()}.{file_ext}"
         with open(temp_path, 'wb') as f:
             f.write(uploaded_file.getvalue())
         

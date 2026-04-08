@@ -105,9 +105,9 @@ def render_sidebar():
     st.sidebar.header("Import CAS Statement")
     
     uploaded_file = st.sidebar.file_uploader(
-        "Upload CAS (PDF or CSV)",
-        type=['pdf', 'csv'],
-        help="Upload your Consolidated Account Statement from Karvy or CAMS"
+        "Upload CAS (PDF, CSV, or Excel)",
+        type=['pdf', 'csv', 'xls', 'xlsx'],
+        help="Upload your Consolidated Account Statement from Karvy or CAMS (PDF, CSV, XLS, XLSX)"
     )
     
     if uploaded_file is not None:

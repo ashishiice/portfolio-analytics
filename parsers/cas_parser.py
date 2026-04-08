@@ -168,7 +168,7 @@ class CASParser:
     
     def parse(self, file_path: str) -> Dict[str, Any]:
         """
-        Parse a CAS file (PDF or CSV).
+        Parse a CAS file (PDF, CSV, or Excel).
         
         Args:
             file_path: Path to CAS file
@@ -187,8 +187,10 @@ class CASParser:
             return self.parse_pdf(file_path)
         elif ext == '.csv':
             return self.parse_csv(file_path)
+        elif ext in ['.xls', '.xlsx']:
+            return self.parse_excel(file_path)
         else:
-            raise ValueError(f"Unsupported file format: {ext}")
+            raise ValueError(f"Unsupported file format: {ext}. Supported: .pdf, .csv, .xls, .xlsx")
     
     def parse_pdf(self, pdf_path: str) -> Dict[str, Any]:
         """
@@ -605,6 +607,135 @@ class CASParser:
             logger.debug(f"Error parsing CSV transaction row: {e}")
         
         return None
+    
+    def parse_excel(self, excel_path: str) -> Dict[str, Any]:
+        """
+        Parse Excel CAS statement (XLS or XLSX).
+        
+        Args:
+            excel_path: Path to Excel file
+        
+        Returns:
+            Dictionary with 'holdings' and 'transactions' lists
+        """
+        logger.info(f"Parsing Excel file: {excel_path}")
+        
+        holdings = []
+        transactions = []
+        
+        try:
+            # Read all sheets
+            xls = pd.ExcelFile(excel_path)
+            
+            for sheet_name in xls.sheet_names:
+                try:
+                    df = pd.read_excel(excel_path, sheet_name=sheet_name)
+                    
+                    # Skip empty sheets
+                    if df.empty:
+                        continue
+                    
+                    # Convert all columns to string for processing
+                    df = df.astype(str)
+                    
+                    # Look for holdings data - search for ISIN pattern
+                    isin_mask = df.apply(lambda x: x.str.contains('INF', na=False).any(), axis=1)
+                    
+                    if isin_mask.any():
+                        # This sheet contains holdings data
+                        for idx, row in df.iterrows():
+                            try:
+                                row_text = ' '.join(row.values)
+                                
+                                # Extract ISIN
+                                isin_match = re.search(r'(INF[0-9A-Z]{9,})', row_text)
+                                if not isin_match:
+                                    continue
+                                
+                                isin = isin_match.group(1)
+                                
+                                # Extract scheme name (usually in same row or column)
+                                scheme_name = self._extract_scheme_name(row_text, isin)
+                                
+                                # Extract folio (typically numeric)
+                                folio_match = re.search(r'Folio[:\s]+(\d+)', row_text, re.IGNORECASE)
+                                if not folio_match:
+                                    # Try standalone number pattern
+                                    folio_match = re.search(r'(?:^|\s)(\d{8,16})(?:\s|$)', row_text)
+                                folio = folio_match.group(1) if folio_match else ""
+                                
+                                # Extract numeric values (units, nav, value)
+                                numbers = re.findall(r'\b(\d+\.?\d*)\b', row_text.replace(',', ''))
+                                numbers = [float(n) for n in numbers if float(n) > 0]
+                                
+                                if len(numbers) >= 3:
+                                    units = numbers[-3]
+                                    nav = numbers[-2]
+                                    value = numbers[-1]
+                                elif len(numbers) == 2:
+                                    units = numbers[0]
+                                    nav = numbers[1]
+                                    value = units * nav
+                                else:
+                                    continue
+                                
+                                # Classify category
+                                category = self.classifier.classify(scheme_name)
+                                amc = self.classifier.get_amc(scheme_name)
+                                
+                                holding = ParsedHolding(
+                                    isin=isin,
+                                    scheme_name=scheme_name,
+                                    folio=folio,
+                                    units=units,
+                                    current_nav=nav,
+                                    current_value=value,
+                                    category=category,
+                                    amc=amc
+                                )
+                                holdings.append(holding.to_dict())
+                                
+                            except Exception as e:
+                                logger.debug(f"Error parsing Excel row {idx}: {e}")
+                                continue
+                    
+                except Exception as e:
+                    logger.warning(f"Error reading sheet {sheet_name}: {e}")
+                    continue
+            
+            logger.info(f"Excel parsing complete: {len(holdings)} holdings, {len(transactions)} transactions")
+            
+        except Exception as e:
+            logger.error(f"Error parsing Excel file: {e}")
+            raise
+        
+        return {
+            'holdings': holdings,
+            'transactions': transactions,
+            'file_type': 'excel',
+            'parsed_at': datetime.now().isoformat()
+        }
+    
+    def _extract_scheme_name(self, text: str, isin: str) -> str:
+        """Extract scheme name from text, excluding ISIN and other identifiers."""
+        # Remove ISIN
+        text = text.replace(isin, '')
+        
+        # Remove folio numbers (typically 8-16 digits)
+        text = re.sub(r'\b\d{8,16}\b', '', text)
+        
+        # Remove standalone numbers
+        text = re.sub(r'\b\d+\.?\d*\b', '', text)
+        
+        # Clean up
+        text = re.sub(r'\s+', ' ', text).strip()
+        
+        # Remove common non-scheme words
+        words_to_remove = ['Folio', 'ISIN', 'Units', 'NAV', 'Value', 'Growth', 'Direct']
+        for word in words_to_remove:
+            text = re.sub(r'\b' + word + r'\b', '', text, flags=re.IGNORECASE)
+        
+        return text.strip() or "Unknown Scheme"
     
     def parse_to_dataframe(self, file_path: str) -> Tuple[pd.DataFrame, pd.DataFrame]:
         """

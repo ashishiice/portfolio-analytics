@@ -56,9 +56,18 @@ class FDParser:
         self.df = None
         self.errors = []
         
+    def _read_file(self) -> pd.DataFrame:
+        """Read CSV or Excel file based on extension."""
+        ext = self.file_path.suffix.lower()
+        if ext in ['.xls', '.xlsx']:
+            # Read first sheet for Excel files
+            return pd.read_excel(self.file_path, sheet_name=0)
+        else:
+            return pd.read_csv(self.file_path)
+    
     def validate(self) -> Tuple[bool, List[str]]:
         """
-        Validate FD CSV file.
+        Validate FD CSV/Excel file.
         
         Returns:
             (is_valid, list of error messages)
@@ -70,9 +79,9 @@ class FDParser:
             return False, self.errors
         
         try:
-            self.df = pd.read_csv(self.file_path)
+            self.df = self._read_file()
         except Exception as e:
-            self.errors.append(f"Cannot read CSV: {e}")
+            self.errors.append(f"Cannot read file: {e}")
             return False, self.errors
         
         # Check required columns
@@ -218,8 +227,16 @@ class PPFParser:
         self.df = None
         self.errors = []
     
+    def _read_file(self) -> pd.DataFrame:
+        """Read CSV or Excel file based on extension."""
+        ext = self.file_path.suffix.lower()
+        if ext in ['.xls', '.xlsx']:
+            return pd.read_excel(self.file_path, sheet_name=0)
+        else:
+            return pd.read_csv(self.file_path)
+    
     def validate(self) -> Tuple[bool, List[str]]:
-        """Validate PPF CSV file."""
+        """Validate PPF CSV/Excel file."""
         self.errors = []
         
         if not self.file_path.exists():
@@ -227,9 +244,9 @@ class PPFParser:
             return False, self.errors
         
         try:
-            self.df = pd.read_csv(self.file_path)
+            self.df = self._read_file()
         except Exception as e:
-            self.errors.append(f"Cannot read CSV: {e}")
+            self.errors.append(f"Cannot read file: {e}")
             return False, self.errors
         
         # Check required columns
@@ -374,8 +391,16 @@ class NPSParser:
         self.df = None
         self.errors = []
     
+    def _read_file(self) -> pd.DataFrame:
+        """Read CSV or Excel file based on extension."""
+        ext = self.file_path.suffix.lower()
+        if ext in ['.xls', '.xlsx']:
+            return pd.read_excel(self.file_path, sheet_name=0)
+        else:
+            return pd.read_csv(self.file_path)
+    
     def validate(self) -> Tuple[bool, List[str]]:
-        """Validate NPS CSV file."""
+        """Validate NPS CSV/Excel file."""
         self.errors = []
         
         if not self.file_path.exists():
@@ -383,9 +408,9 @@ class NPSParser:
             return False, self.errors
         
         try:
-            self.df = pd.read_csv(self.file_path)
+            self.df = self._read_file()
         except Exception as e:
-            self.errors.append(f"Cannot read CSV: {e}")
+            self.errors.append(f"Cannot read file: {e}")
             return False, self.errors
         
         # Check required columns
